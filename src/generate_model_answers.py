@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-
+import re
 import numpy as np
 import pandas as pd
 import torch
@@ -32,7 +32,7 @@ def parse_args():
 
 
 def _extract_qa_medical(example):
-    text = example['Text']  # Adjust if your key is different
+    text = example['text']  # Adjust if your key is different
     # Remove system prompt
     text_no_sys = re.sub(r'<<SYS>>.*?<</SYS>>', '', text, flags=re.DOTALL)
 
@@ -56,10 +56,15 @@ def load_data_medical(test=False):
 
     ds = load_dataset(file_path)
     ds = ds.map(_extract_qa_medical)
-    df = ds.to_pandas()
-    question = data['Question']
-    answer = data['Answer']
-    return questions, answers
+    # Access the appropriate split
+    if test:
+        ds_split = ds['test'] if 'test' in ds else ds['train']
+    else:
+        ds_split = ds['train']
+    df = ds_split.to_pandas()
+    question = df['Question']
+    answer = df['Answer']
+    return question, answer
 
 def load_data_movies(test=False):
     file_name = 'movie_qa'
@@ -234,6 +239,7 @@ def generate_model_answers(data, model, tokenizer, device, model_name, do_sample
     all_input_output_ids = []
     all_output_ids = []
     counter = 0
+    stop_token_id = tokenizer.eos_token_id
     for prompt in tqdm(data):
 
         model_input = tokenize(prompt, tokenizer, model_name).to(device)
@@ -421,8 +427,10 @@ def load_data(dataset_name):
     context, origin, stereotype, type_, wrong_labels = None, None, None, None, None
     if dataset_name == 'medical':
         all_questions, labels = load_data_medical(False)
-    if dataset_name == 'medical_test':
+        preprocess_fn = triviqa_preprocess
+    elif dataset_name == 'medical_test':
         all_questions, labels = load_data_medical(True)
+        preprocess_fn = triviqa_preprocess
     elif dataset_name == 'triviaqa':
         all_questions, labels = load_data_triviaqa(False)
         preprocess_fn = triviqa_preprocess
