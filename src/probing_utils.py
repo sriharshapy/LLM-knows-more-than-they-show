@@ -110,6 +110,8 @@ def tokenize(prompt, tokenizer, model_name, tokenizer_args=None):
         ]
         model_input = tokenizer.apply_chat_template(messages, return_tensors="pt", **(tokenizer_args or {})).to('cuda')
     else: # non instruct model
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
         model_input = tokenizer(prompt, return_tensors='pt', padding=True,**(tokenizer_args or {}))
         if "input_ids" in model_input:
             model_input = model_input["input_ids"].to('cuda')
