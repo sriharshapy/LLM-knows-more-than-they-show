@@ -110,12 +110,26 @@ def tokenize(prompt, tokenizer, model_name, tokenizer_args=None):
         ]
         model_input = tokenizer.apply_chat_template(messages, return_tensors="pt", **(tokenizer_args or {})).to('cuda')
     else: # non instruct model
-        if tokenizer.pad_token is None:
-            tokenizer.pad_token = tokenizer.eos_token
-        model_input = tokenizer(prompt, return_tensors='pt', padding=True,**(tokenizer_args or {}))
+        model_input = tokenizer(prompt, return_tensors='pt', **(tokenizer_args or {}))
         if "input_ids" in model_input:
             model_input = model_input["input_ids"].to('cuda')
     return model_input
+
+
+def tokenize_LLAMA_32(prompt, tokenizer, model_name, tokenizer_args=None):
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+
+        model_input = tokenizer(
+            prompt,
+            return_tensors='pt',
+            padding=True,  # Ensure padding is applied
+            **(tokenizer_args or {})
+        )
+        input_ids = model_input["input_ids"].to('cuda')
+        attention_mask = model_input["attention_mask"].to('cuda')
+
+        return input_ids, attention_mask
 
 
 def generate(model_input, model, model_name, do_sample=False, output_scores=False, temperature=1.0, top_k=50, top_p=1.0,
