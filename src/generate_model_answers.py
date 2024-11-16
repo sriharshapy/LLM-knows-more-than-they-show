@@ -15,7 +15,7 @@ from datasets import load_dataset
 from compute_correctness import compute_correctness
 from probing_utils import load_model_and_validate_gpu, tokenize, generate, LIST_OF_DATASETS, MODEL_FRIENDLY_NAMES, \
     LIST_OF_MODELS
-
+from probing_utils import tokenize_LLAMA_32
 
 def parse_args():
     parser = argparse.ArgumentParser(description="A script for generating model answers and outputting to csv")
