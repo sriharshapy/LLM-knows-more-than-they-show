@@ -170,17 +170,17 @@ def compute_correctness_natual_questions(all_questions, model_answers, labels, m
                 Evaluate the following answers to questions. For each question you would be given a model answer and the correct answer.
                 You would have to determine if the model answer is correct or not. If the model answer is correct, write '1' and if it is not correct, write '0'.
                 For example:
-                
+
                 Question: who is the young guitarist who played with buddy guy?
                 Ground Truth: Quinn Sullivan
                 Model Answer: Ronnie Earl Explanation: Ronnie Earl is an American blues guitarist and singer who has played with many famous blues musicians, including Buddy Guy. He is known for his soulful and melodic playing style, and has released many albums that blend blues, jazz, and rock music. Earl has also been a member of the Buddy Guy Blues Band and has played with other notable blues musicians such as B.B. King, Eric Clapton, and Stevie Ray Vaughan. He is considered one of the most
                 Correctness: 0
-                
-                Question: name of the first episode of stranger things 
+
+                Question: name of the first episode of stranger things
                 Ground Truth: Chapter One : The Vanishing of Will Byers
                 Model Answer:  The disappearance of Will Byers. Explanation: The first episode of the first season of Stranger Things is titled "The Vanishing of Will Byers". The episode introduces the main characters and sets the tone for the rest of the series. It follows the story of Will Byers, a young boy who goes missing in the fictional town of Hawkins, Indiana, and the subsequent search for him by his mother Joyce and his friends Mike, Dustin, and Lucas. The episode sets the stage for the supernatural
                 Correctness: 1
-                
+
                 Question: {question}
                 Ground Truth: {label}
                 Model Answer: {model_answer}
@@ -286,6 +286,7 @@ CORRECTNESS_FN = {
     'hotpotqa_with_context': compute_correctness_hotpotqa,
     'math': compute_correctness_math,
     'movies': compute_correctness_movies,
+    'medical': compute_correctness_movies,
     'mnli': compute_correctness_nli,
     'natural_questions_with_context': compute_correctness_natual_questions
 }

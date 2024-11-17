@@ -62,8 +62,8 @@ def load_data_medical(test=False):
     else:
         ds_split = ds['train']
     df = ds_split.to_pandas()
-    question = df['Question']
-    answer = df['Answer']
+    question = df['Question'][:10]
+    answer = df['Answer'][:10]
     return question, answer
 
 def load_data_movies(test=False):
