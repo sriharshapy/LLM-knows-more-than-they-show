@@ -242,7 +242,7 @@ def generate_model_answers(data, model, tokenizer, device, model_name, do_sample
     stop_token_id = tokenizer.eos_token_id
     for prompt in tqdm(data):
 
-        model_input, attention_mask = tokenize_LLAMA_32(prompt, tokenizer, model_name).to(device)
+        model_input, attention_mask = tokenize_LLAMA_32(prompt, tokenizer, model_name)
 
         with torch.no_grad():
 
