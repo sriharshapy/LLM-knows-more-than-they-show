@@ -30,7 +30,8 @@ def parse_args():
                         choices=LIST_OF_DATASETS)
     parser.add_argument("--verbose", action='store_true', help='print more information')
     parser.add_argument("--n_samples", type=int, help='number of examples to use', default=None)
-
+    parser.add_argument("--dataset_range_upper",type=int, required=False)
+    parser.add_argument("--dataset_range_lower",type=int, required=False)
 
     return parser.parse_args()
 
@@ -367,6 +368,7 @@ A:''')
                 A:''')
     print('Prompt:', prompts[-1])
     return prompts
+
 def triviaqa_postprocess(model_name, raw_answers):
     model_answers = []
     if 'instruct' in model_name.lower():
@@ -376,7 +378,6 @@ def triviaqa_postprocess(model_name, raw_answers):
             model_answer = ans.strip().split('\n')[0]
             model_answers.append(model_answer)
     return raw_answers, model_answers
-
 
 def load_winobias(dev_or_test):
     data = pd.read_csv(f'../data/winobias_{dev_or_test}.csv')
@@ -525,9 +526,10 @@ def main():
         stop_token_id = tokenizer.encode('\n', add_special_tokens=False)[-1]
     all_questions, context, labels, max_new_tokens, origin, preprocess_fn, stereotype, type_, wrong_labels = load_data(args.dataset)
 
-    if not os.path.exists('../output'):
-        os.makedirs('../output')
-
+    # if not os.path.exists('../output'):
+    #     os.makedirs('../output')
+    RANGE_LOWER_LIMIT = args.dataset_range_lower
+    RANGE_UPPER_LIMIT = args.dataset_range_upper
     range = f"{RANGE_LOWER_LIMIT}-{RANGE_UPPER_LIMIT}"
     directory_path = f"/content/drive/MyDrive/DeterminedAI/{range}"
 
