@@ -535,8 +535,8 @@ def main():
     os.makedirs(directory_path, exist_ok=True)
 
     file_path_output_ids = f"{directory_path}/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt"
-    file_path_scores = f"{directory_path}/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
-    file_path_answers = f"{directory_path}/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+    file_path_scores = f"{directory_path}/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
+    file_path_answers = f"{directory_path}/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
 
     if dataset_size:
         all_questions = all_questions[:dataset_size]
