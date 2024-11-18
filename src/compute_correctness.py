@@ -2,7 +2,7 @@ import gc
 
 import numpy as np
 import torch
-from probing_utils import load_model_and_validate_gpu, tokenize, generate
+from probing_utils import load_model_and_validate_gpu, tokenize, generate, load_model_and_validate_gpu_quantized
 from tqdm import tqdm
 
 
@@ -160,7 +160,7 @@ def compute_correctness_natual_questions(all_questions, model_answers, labels, m
     print("Computing correctness for Natural Questions")
 
     if model is None:
-        model, tokenizer = load_model_and_validate_gpu('mistralai/Mistral-7B-Instruct-v0.2')
+        model, tokenizer = load_model_and_validate_gpu_quantized('mistralai/Mistral-7B-Instruct-v0.2')
     correctness = []
     for question, model_answer, label in tqdm(zip(all_questions, model_answers, labels)):
         if str(label).lower() in str(model_answer).lower():

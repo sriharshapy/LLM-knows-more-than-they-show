@@ -340,6 +340,21 @@ def load_model_and_validate_gpu(model_path, tokenizer_path=None):
     assert ('cpu' not in model.hf_device_map.values())
     return model, tokenizer
 
+def load_model_and_validate_gpu_quantized(model_path, tokenizer_path=None):
+    if tokenizer_path is None:
+        tokenizer_path = model_path
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    print("Started loading model")
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        device_map='auto',
+        torch_dtype=torch.bfloat16,
+        load_in_8bit=True,  # Use 8-bit precision
+        low_cpu_mem_usage=True
+    )
+    assert ('cpu' not in model.hf_device_map.values())
+    return model, tokenizer
+
 
 def compute_metrics_probing(clf, X_valid, y_valid, pos_label=0, predicted_probas=None):
     if predicted_probas is None:
