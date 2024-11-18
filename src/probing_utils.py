@@ -50,6 +50,7 @@ LAYERS_TO_TRACE = {
     'meta-llama/Meta-Llama-3-8B-Instruct': LAYERS_TO_TRACE_LLAMA,
     'meta-llama/Meta-Llama-3-8B': LAYERS_TO_TRACE_LLAMA,
     'meta-llama/Llama-3.2-1B' : LAYERS_TO_TRACE_LLAMA_32,
+    'hitmanonholiday/LLAMA-3.2-1B-medical-qa' : LAYERS_TO_TRACE_LLAMA_32,
 }
 
 N_LAYERS = {
@@ -57,7 +58,8 @@ N_LAYERS = {
     'mistralai/Mistral-7B-v0.3': N_LAYERS_MISTRAL,
     'meta-llama/Meta-Llama-3-8B-Instruct': N_LAYER_LLAMA,
     'meta-llama/Meta-Llama-3-8B': N_LAYER_LLAMA,
-    'meta-llama/Llama-3.2-1B': N_LAYER_LLAMA_32
+    'meta-llama/Llama-3.2-1B': N_LAYER_LLAMA_32,
+    'hitmanonholiday/LLAMA-3.2-1B-medical-qa': N_LAYER_LLAMA_32,
 }
 
 HIDDEN_SIZE = {
@@ -69,6 +71,7 @@ HIDDEN_SIZE = {
     'google/gemma-7b': 3072,
     'google/gemma-7b-it': 3072,
     'meta-llama/Llama-3.2-1B': 2048,
+    'hitmanonholiday/LLAMA-3.2-1B-medical-qa': 2048,
 }
 
 LIST_OF_DATASETS = [
@@ -81,7 +84,8 @@ LIST_OF_MODELS = ['mistralai/Mistral-7B-Instruct-v0.2',
                                             'mistralai/Mistral-7B-v0.3',
                                             'meta-llama/Meta-Llama-3-8B',
                                             'meta-llama/Meta-Llama-3-8B-Instruct',
-                                            'meta-llama/Llama-3.2-1B'
+                                            'meta-llama/Llama-3.2-1B',
+                                            'hitmanonholiday/LLAMA-3.2-1B-medical-qa',
                                             ]
 
 MODEL_FRIENDLY_NAMES = {
@@ -90,6 +94,7 @@ MODEL_FRIENDLY_NAMES = {
     'meta-llama/Meta-Llama-3-8B': 'llama-3-8b',
     'meta-llama/Meta-Llama-3-8B-Instruct': 'llama-3-8b-instruct',
     'meta-llama/Llama-3.2-1B': 'llama-3.2-1B',
+    'hitmanonholiday/LLAMA-3.2-1B-medical-qa' : 'LLAMA-3.2-1B-medical'
 }
 
 LIST_OF_PROBING_LOCATIONS = ['mlp', 'mlp_last_layer_only', 'mlp_last_layer_only_input', 'attention_output']

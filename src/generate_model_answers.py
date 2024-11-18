@@ -521,9 +521,11 @@ def main():
     if not os.path.exists('../output'):
         os.makedirs('../output')
 
-    file_path_output_ids = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt"
-    file_path_scores = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
-    file_path_answers = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+    range = "0-10"
+
+    file_path_output_ids = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt"
+    file_path_scores = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
+    file_path_answers = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
 
     if dataset_size:
         all_questions = all_questions[:dataset_size]
