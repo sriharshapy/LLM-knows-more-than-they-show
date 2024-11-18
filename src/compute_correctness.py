@@ -286,7 +286,7 @@ CORRECTNESS_FN = {
     'hotpotqa_with_context': compute_correctness_hotpotqa,
     'math': compute_correctness_math,
     'movies': compute_correctness_movies,
-    'medical': compute_correctness_movies,
+    'medical': compute_correctness_natual_questions,
     'mnli': compute_correctness_nli,
     'natural_questions_with_context': compute_correctness_natual_questions
 }
