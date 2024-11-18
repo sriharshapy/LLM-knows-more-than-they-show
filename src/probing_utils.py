@@ -13,7 +13,7 @@ from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from tqdm import tqdm
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 N_LAYERS_MISTRAL = 32
 N_LAYER_LLAMA = 32
@@ -345,11 +345,17 @@ def load_model_and_validate_gpu_quantized(model_path, tokenizer_path=None):
         tokenizer_path = model_path
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
     print("Started loading model")
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_use_double_quant=True,   # Use double quantization for better memory efficiency
+        bnb_4bit_quant_type="nf4",        # Use "nf4" (normal float 4) quantization
+        bnb_4bit_compute_dtype="bfloat16" # Use bfloat16 for computation
+    )
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
-        device_map='auto',
+        quantization_config=bnb_config,
+        device_map="auto",
         torch_dtype=torch.bfloat16,
-        load_in_8bit=True,  # Use 8-bit precision
         low_cpu_mem_usage=True
     )
     assert ('cpu' not in model.hf_device_map.values())
