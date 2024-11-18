@@ -259,7 +259,7 @@ def compute_correctness_winogrande(model_answers, labels, wrong_labels, model_na
     return {"correct_labels": labels, "incorrect_answer": wrong_labels, "correctness": correctness, "exact_answer": exact_answers}
 
 def compute_correctness(all_questions, dataset_name, model_name, labels, model, model_answers, tokenizer, wrong_labels):
-    if 'natural_questions' in dataset_name:
+    if 'natural_questions' in dataset_name or 'medical' in dataset_name:
         if model == 'mistralai/Mistral-7B-Instruct-v0.2':
             res = compute_correctness_natual_questions(all_questions, model_answers, labels, model=model,
                                                                tokenizer=tokenizer)
