@@ -509,8 +509,11 @@ def main():
     init_wandb(args)
     set_seed(0)
     dataset_size = args.n_samples
+    tokenizer_path = None
+    if args.model == 'hitmanonholiday/LLAMA-3.2-1B-medical-qa':
+        tokenizer_path = 'meta-llama/Llama-3.2-1B'
 
-    model, tokenizer = load_model_and_validate_gpu(args.model)
+    model, tokenizer = load_model_and_validate_gpu(args.model,tokenizer_path)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     stop_token_id = None
