@@ -17,6 +17,10 @@ from probing_utils import load_model_and_validate_gpu, tokenize, generate, LIST_
     LIST_OF_MODELS
 from probing_utils import tokenize_LLAMA_32
 
+RANGE_UPPER_LIMIT = 10
+RANGE_LOWER_LIMIT = 0
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="A script for generating model answers and outputting to csv")
     parser.add_argument("--model",
@@ -62,8 +66,8 @@ def load_data_medical(test=False):
     else:
         ds_split = ds['train']
     df = ds_split.to_pandas()
-    question = df['Question'][:10]
-    answer = df['Answer'][:10]
+    question = df['Question'][RANGE_LOWER_LIMIT:RANGE_UPPER_LIMIT]
+    answer = df['Answer'][RANGE_LOWER_LIMIT:RANGE_UPPER_LIMIT]
     return question, answer
 
 def load_data_movies(test=False):
@@ -524,11 +528,15 @@ def main():
     if not os.path.exists('../output'):
         os.makedirs('../output')
 
-    range = "0-10"
+    range = f"{RANGE_LOWER_LIMIT}-{RANGE_UPPER_LIMIT}"
+    directory_path = f"/content/drive/MyDrive/DeterminedAI/{range}"
 
-    file_path_output_ids = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt"
-    file_path_scores = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
-    file_path_answers = f"/content/drive/MyDrive/DeterminedAI/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+    # Create the directory if it doesn't exist
+    os.makedirs(directory_path, exist_ok=True)
+
+    file_path_output_ids = f"{directory_path}/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt"
+    file_path_scores = f"{directory_path}/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-scores-{args.dataset}.pt"
+    file_path_answers = f"{directory_path}/{range}/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
 
     if dataset_size:
         all_questions = all_questions[:dataset_size]
