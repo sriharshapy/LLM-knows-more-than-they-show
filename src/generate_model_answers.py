@@ -145,11 +145,20 @@ def load_data(dataset_name,RANGE_LOWER_LIMIT,RANGE_UPPER_LIMIT):
     return all_questions, context, labels, max_new_tokens, origin, preprocess_fn, stereotype, type_, wrong_labels
 
 def main():
+
+    torch.manual_seed(42)
+    torch.cuda.manual_seed(42)
+    torch.cuda.manual_seed_all(42)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    
     args = parse_args()
     init_wandb(args)
     set_seed(0)
+
     dataset_size = args.n_samples
     tokenizer_path = None
+
     if args.model == 'hitmanonholiday/LLAMA-3.2-1B-medical-qa':
         tokenizer_path = 'meta-llama/Llama-3.2-1B'
 
