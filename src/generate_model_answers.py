@@ -52,7 +52,7 @@ def _extract_qa_medical(example):
     # Return a dictionary with the new fields
     return {'Question': question, 'Answer': answer}
 
-def load_data_medical(test=False,RANGE_LOWER_LIMIT,RANGE_UPPER_LIMIT):
+def load_data_medical(test,RANGE_LOWER_LIMIT,RANGE_UPPER_LIMIT):
     file_name = "medical"
     if test:
         file_path = 'missjd123/MedQuad-MedicalQnADataset_test'
@@ -130,8 +130,6 @@ def triviqa_preprocess(model_name, all_questions, labels):
             prompts.append(f'''Q: {q}
         A:''')
     return prompts
-
-
 
 def load_data(dataset_name,RANGE_LOWER_LIMIT,RANGE_UPPER_LIMIT):
     max_new_tokens = 100
