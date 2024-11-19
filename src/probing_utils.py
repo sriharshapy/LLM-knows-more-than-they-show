@@ -76,7 +76,7 @@ HIDDEN_SIZE = {
 
 LIST_OF_DATASETS = [
                     'medical',
-                    'medica_test'
+                    'medical_test',
                     ]
 
 LIST_OF_TEST_DATASETS = [f"{x}_test" for x in LIST_OF_DATASETS]
