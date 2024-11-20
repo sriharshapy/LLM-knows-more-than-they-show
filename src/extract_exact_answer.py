@@ -26,6 +26,7 @@ def parse_args():
     parser.add_argument("--n_samples", type=int, default=0)
     parser.add_argument("--extraction_model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model used for exact answer extraction")
     parser.add_argument("--model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model which answers are to be extracted")
+    parser.add_argument("--custom_model", typ=str, default='mistralai/Mistral-7B-Instruct-v0.2', help="custom model")
 
     args = parser.parse_args()
     wandb.init(
@@ -124,13 +125,20 @@ def extract_exact_answer(model, tokenizer, correctness, question, model_answer, 
 
 def main():
     args = parse_args()
-    model, tokenizer = load_model_and_validate_gpu(args.extraction_model)
-    source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
-    resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt"
+    # model, tokenizer = load_model_and_validate_gpu(args.extraction_model)
+    tokenizer_path = None
+
+    if args.custom_model == 'hitmanonholiday/LLAMA-3.2-1B-medical-qa':
+        tokenizer_path = 'meta-llama/Llama-3.2-1B'
+
+    model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
+    
+    source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+    resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt" #we dont have this right.
     if args.do_resampling > 0:
         destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
     else:
-        destination_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+        destination_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
 
     model_answers = pd.read_csv(source_file)
     print(f"Length of data: {len(model_answers)}")
@@ -176,7 +184,7 @@ def main():
                 ctr_no_answer += 1
             if valid == 1:
                 ctr += 1
-        else:
+        else: #not needed
             exact_answers_specific_index = []
             valid_lst_specific_index = []
             for resample_answers in all_resample_answers:
