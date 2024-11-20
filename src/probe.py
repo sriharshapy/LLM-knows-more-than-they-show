@@ -71,7 +71,7 @@ def probe(model, tokenizer, data, input_output_ids, token, layer, probe_at, seed
 
     X_test = None
     y_test = None
-    if data_test is not None:
+    if data_test is not None: #notneeded
         test_data_indices = data_test.index
         if 'exact_answer' in data:
             test_data_indices = test_data_indices[
@@ -152,20 +152,20 @@ def get_saved_clf_if_exists(args):
 def main():
     args = parse_args_and_init_wandb()
 
-    model, tokenizer = load_model_and_validate_gpu(args.model)
+    model, tokenizer = load_model_and_validate_gpu(args.model) #load our model
 
     data_test = None
     input_output_ids_test = None
-    model_output_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+    model_output_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #change
     data = pd.read_csv(model_output_file).reset_index()
     input_output_ids = torch.load(
-        f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt")
+        f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt") #??
 
     if args.test_dataset is not None:
-        test_dataset = args.test_dataset
+        test_dataset = args.test_dataset #put test data none
     else:
         test_dataset = args.dataset
-    model_output_file_test = f"../output/mistral-7b-instruct-answers-{test_dataset}_test.csv"
+    model_output_file_test = f"../output/mistral-7b-instruct-answers-{test_dataset}_test.csv" #change
     load_test = False
     if os.path.isfile(model_output_file_test):
         data_test = pd.read_csv(model_output_file_test)
