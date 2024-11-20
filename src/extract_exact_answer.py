@@ -7,7 +7,7 @@ from sklearn.utils import resample
 
 from compute_correctness import compute_correctness_triviaqa, compute_correctness_math, compute_correctness
 
-sys.path.append("../src")
+# sys.path.append("../src")
 
 import pandas as pd
 import torch
@@ -133,12 +133,13 @@ def main():
 
     # model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
     
-    source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+    # source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+    source_file = "/content/drive/MyDrive/llms/LLM-knows-more-than-they-show-harsha/LLM-knows-more-than-they-show-main/LLAMA-3.2-1B-medical-answers-medical_test.csv"
     resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt" #we dont have this right.
     if args.do_resampling > 0:
         destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
     else:
-        destination_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+        destination_file = "/content/drive/MyDrive/llms/LLM-knows-more-than-they-show-harsha/LLM-knows-more-than-they-show-main/LLAMA-3.2-1B-medical-answers-medical_test.csv" #to change
 
     model_answers = pd.read_csv(source_file)
     print(f"Length of data: {len(model_answers)}")
@@ -164,7 +165,7 @@ def main():
             question_col = 'question'
 
         if args.do_resampling <= 0:
-            if ('natural_questions' in source_file) or args.get_extraction_stats:
+            if ('medical' in source_file) or args.get_extraction_stats:
                 automatic_correctness = 0
             else:
                 automatic_correctness = row['automatic_correctness']
