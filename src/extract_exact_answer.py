@@ -13,7 +13,7 @@ import pandas as pd
 import torch
 from tqdm import tqdm
 
-from probing_utils import load_model_and_validate_gpu, tokenize, generate, LIST_OF_MODELS, MODEL_FRIENDLY_NAMES, \
+from probing_utils import load_model_and_validate_gpu, load_model_and_validate_gpu_quantized, tokenize, generate, LIST_OF_MODELS, MODEL_FRIENDLY_NAMES, \
     LIST_OF_TEST_DATASETS, LIST_OF_DATASETS
 
 
@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument("--n_samples", type=int, default=0)
     parser.add_argument("--extraction_model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model used for exact answer extraction")
     parser.add_argument("--model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model which answers are to be extracted")
-    parser.add_argument("--custom_model", typ=str, default='mistralai/Mistral-7B-Instruct-v0.2', help="custom model")
+    # parser.add_argument("--custom_model", typ=str, default='mistralai/Mistral-7B-Instruct-v0.2', help="custom model")
 
     args = parser.parse_args()
     wandb.init(
@@ -97,7 +97,7 @@ def extract_exact_answer(model, tokenizer, correctness, question, model_answer, 
         retries = 0
         sample = True
         print("###")
-        while valid == 0 and retries < 5:
+        while valid == 0 and retries < 3:
             with torch.no_grad():
                 model_output = generate(model_input, model, model_name, sample, False)
                 exact_answer = tokenizer.decode(model_output['sequences'][0][len(model_input[0]):])
@@ -125,13 +125,13 @@ def extract_exact_answer(model, tokenizer, correctness, question, model_answer, 
 
 def main():
     args = parse_args()
-    # model, tokenizer = load_model_and_validate_gpu(args.extraction_model)
-    tokenizer_path = None
+    model, tokenizer = load_model_and_validate_gpu_quantized(args.extraction_model)
+    # tokenizer_path = None
 
-    if args.custom_model == 'hitmanonholiday/LLAMA-3.2-1B-medical-qa':
-        tokenizer_path = 'meta-llama/Llama-3.2-1B'
+    # if args.custom_model == 'hitmanonholiday/LLAMA-3.2-1B-medical-qa':
+    #     tokenizer_path = 'meta-llama/Llama-3.2-1B'
 
-    model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
+    # model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
     
     source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
     resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt" #we dont have this right.
