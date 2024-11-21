@@ -178,19 +178,24 @@ def main():
     wandb.summary['successful_extractions'] = ctr / total_n_answers
     wandb.summary['no_answer'] = ctr_no_answer / total_n_answers
 
-    if not args.get_extraction_stats:
-        if args.do_resampling <= 0:
-            model_answers['exact_answer'] = exact_answers
-            model_answers['valid_exact_answer'] = valid_lst
-            model_answers.to_csv(destination_file)
-        else:
-            torch.save({
-                "exact_answer": exact_answers,
-                "valid_exact_answer": valid_lst
-            }, destination_file)
-    else:
-        model_answers['exact_answer'] = exact_answers
-        model_answers['valid_exact_answer'] = valid_lst
+
+
+    model_answers['exact_answer'] = exact_answers
+    model_answers['valid_exact_answer'] = valid_lst
+    model_answers.to_csv(destination_file)
+    # if not args.get_extraction_stats:
+    #     if args.do_resampling <= 0:
+    #         model_answers['exact_answer'] = exact_answers
+    #         model_answers['valid_exact_answer'] = valid_lst
+    #         model_answers.to_csv(destination_file)
+    #     else:
+    #         torch.save({
+    #             "exact_answer": exact_answers,
+    #             "valid_exact_answer": valid_lst
+    #         }, destination_file)
+    # else:
+    #     model_answers['exact_answer'] = exact_answers
+    #     model_answers['valid_exact_answer'] = valid_lst
 
 if __name__ == "__main__":
     main()
