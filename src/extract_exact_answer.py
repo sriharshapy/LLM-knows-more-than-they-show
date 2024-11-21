@@ -20,7 +20,7 @@ from probing_utils import load_model_and_validate_gpu, load_model_and_validate_g
 def parse_args():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, choices=LIST_OF_DATASETS + LIST_OF_TEST_DATASETS)
+    parser.add_argument("--dataset_path", type=str)
     parser.add_argument("--do_resampling", type=int, required=False, default=0, help="If 0, the script will extract exact answers from the model answers. If > 0, the script will extract exact answers from the resampled model answers (looking for a file of do_resampling resamples).")
     parser.add_argument("--get_extraction_stats", action='store_true', default=False, help="Purely for getting statistics. If activated, the file will not be saved.")
     parser.add_argument("--n_samples", type=int, default=0)
@@ -132,8 +132,8 @@ def main():
     #     tokenizer_path = 'meta-llama/Llama-3.2-1B'
 
     # model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
-    
-    source_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+
+    source_file = args.dataset_path
     resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt" #we dont have this right.
     if args.do_resampling > 0:
         destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
