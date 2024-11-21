@@ -21,11 +21,13 @@ def parse_args():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_path", type=str)
+    parser.add_argument("--destination_path", type=str)
     parser.add_argument("--do_resampling", type=int, required=False, default=0, help="If 0, the script will extract exact answers from the model answers. If > 0, the script will extract exact answers from the resampled model answers (looking for a file of do_resampling resamples).")
     parser.add_argument("--get_extraction_stats", action='store_true', default=False, help="Purely for getting statistics. If activated, the file will not be saved.")
     parser.add_argument("--n_samples", type=int, default=0)
     parser.add_argument("--extraction_model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model used for exact answer extraction")
     parser.add_argument("--model", choices=LIST_OF_MODELS, default='mistralai/Mistral-7B-Instruct-v0.2', help="model which answers are to be extracted")
+
     # parser.add_argument("--custom_model", typ=str, default='mistralai/Mistral-7B-Instruct-v0.2', help="custom model")
 
     args = parser.parse_args()
@@ -137,7 +139,7 @@ def main():
     if args.do_resampling > 0:
         destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
     else:
-        destination_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #to change
+        destination_file = args.destination_path
 
     model_answers = pd.read_csv(source_file)
     print(f"Length of data: {len(model_answers)}")
