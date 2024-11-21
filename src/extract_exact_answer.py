@@ -41,44 +41,6 @@ def parse_args():
 
 def extract_exact_answer(model, tokenizer, correctness, question, model_answer, correct_answer, model_name):
 
-    if correctness == 1:
-        found_ans_index = len(model_answer)
-        found_ans = ""
-
-        try:
-            correct_answer_ = eval(correct_answer)
-            if type(correct_answer_) == list:
-                correct_answer = correct_answer_
-        except:
-            correct_answer = correct_answer
-
-        if type(correct_answer) == list:
-            for ans in correct_answer:
-                ans_index = model_answer.lower().find(ans.lower())
-                if ans_index != -1 and ans_index < found_ans_index:
-                    found_ans = ans
-                    found_ans_index = ans_index
-        elif type(correct_answer) in [int, float]:
-            found_ans_index = model_answer.lower().find(str(round(correct_answer)))
-            found_ans = str(round(correct_answer))
-            if found_ans_index == -1:
-                found_ans_index = model_answer.lower().find(str(correct_answer))
-                found_ans = str(correct_answer)
-        else:
-            found_ans_index = model_answer.lower().find(correct_answer.lower())
-            found_ans = correct_answer
-
-
-        if found_ans_index == -1:
-            print("##")
-            print(model_answer)
-            print("##")
-            print(correct_answer)
-            print("ERROR!", question)
-        exact_tokens = list(range(found_ans_index, found_ans_index + len(found_ans)))
-        exact_answer = "".join([model_answer[i] for i in exact_tokens])
-        valid = 1
-    else:
         prompt = f"""
         Extract from the following long answer the short answer, only the relevant tokens. If the long answer does not answer the question, output NO ANSWER.
 
@@ -122,7 +84,7 @@ def extract_exact_answer(model, tokenizer, correctness, question, model_answer, 
                 valid = 1
             retries += 1
 
-    return exact_answer, valid
+        return exact_answer, valid
 
 
 def main():
