@@ -98,10 +98,11 @@ def main():
     # model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
 
     source_file = args.dataset_path
-    if args.do_resampling > 0:
-        destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
-    else:
-        destination_file = args.destination_path
+    destination_file = args.destination_path
+    # if args.do_resampling > 0:
+    #     destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
+    # else:
+    #     destination_file = args.destination_path
 
     model_answers = pd.read_csv(source_file)
     print(f"Length of data: {len(model_answers)}")
