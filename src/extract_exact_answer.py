@@ -134,7 +134,6 @@ def main():
     # model, tokenizer = load_model_and_validate_gpu(args.custom_model,tokenizer_path)
 
     source_file = args.dataset_path
-    resampling_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_textual_answers.pt" #we dont have this right.
     if args.do_resampling > 0:
         destination_file = f"../output/resampling/{MODEL_FRIENDLY_NAMES[args.model]}_{args.dataset}_{args.do_resampling}_exact_answers.pt"
     else:
