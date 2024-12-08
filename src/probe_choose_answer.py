@@ -134,9 +134,9 @@ def compute_correctness_with_probing(n_questions, n_resamples, all_exact_answers
 def main():
     args = parse_args_and_init_wandb()
 
-    model, tokenizer = load_model_and_validate_gpu(args.model)
+    model, tokenizer = load_model_and_validate_gpu(args.model) #todo: our model
 
-    model_output_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv"
+    model_output_file = f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-answers-{args.dataset}.csv" #todo: change
     model_output_greedy = pd.read_csv(model_output_file).reset_index(drop=True)
     model_output_greedy = model_output_greedy[model_output_greedy['valid_exact_answer'] == 1]
 
