@@ -173,13 +173,12 @@ def main():
         test_dataset = args.test_dataset
     else:
         test_dataset = args.dataset
-    # model_output_file_test = f"{BASEPATH}/probing/mistral-7b-instruct-answers-{test_dataset}_test.csv"
+    model_output_file_test = f"{BASEPATH}/test_exact_ans_full.csv"
     load_test = False
-    # if os.path.isfile(model_output_file_test):
-    #     data_test = pd.read_csv(model_output_file_test)
-    #     input_output_ids_test = torch.load(
-    #         f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{test_dataset}_test.pt")
-    #     load_test = True
+    if os.path.isfile(model_output_file_test):
+        data_test = pd.read_csv(model_output_file_test)
+        input_output_ids_test = torch.load(f"{BASEPATH}/test_coimbined_data.pt")
+        load_test = True
 
     if args.save_clf:
         clf, save_clf, save_path = get_saved_clf_if_exists(args)
