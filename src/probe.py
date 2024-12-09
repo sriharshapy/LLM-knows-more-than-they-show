@@ -169,16 +169,16 @@ def main():
     # input_output_ids = torch.load(
     #     f"../output/{MODEL_FRIENDLY_NAMES[args.model]}-input_output_ids-{args.dataset}.pt")
 
-    if args.test_dataset is not None:
-        test_dataset = args.test_dataset
-    else:
-        test_dataset = args.dataset
-    model_output_file_test = f"{BASEPATH}/test_exact_ans_full.csv"
+    # if args.test_dataset is not None:
+    #     test_dataset = args.test_dataset
+    # else:
+    #     test_dataset = args.dataset
+    # model_output_file_test = f"{BASEPATH}/test_exact_ans_full.csv"
     load_test = False
-    if os.path.isfile(model_output_file_test):
-        data_test = pd.read_csv(model_output_file_test)
-        input_output_ids_test = torch.load(f"{BASEPATH}/test_coimbined_data.pt")
-        load_test = True
+    # if os.path.isfile(model_output_file_test):
+    #     data_test = pd.read_csv(model_output_file_test)
+    #     input_output_ids_test = torch.load(f"{BASEPATH}/test_coimbined_data.pt")
+    #     load_test = True
 
     if args.save_clf:
         clf, save_clf, save_path = get_saved_clf_if_exists(args)
