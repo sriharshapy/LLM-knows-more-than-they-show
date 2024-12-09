@@ -174,7 +174,7 @@ def main():
     else:
         test_dataset = args.dataset
     # model_output_file_test = f"{BASEPATH}/probing/mistral-7b-instruct-answers-{test_dataset}_test.csv"
-    load_test = False
+    load_test = True
     # if os.path.isfile(model_output_file_test):
     #     data_test = pd.read_csv(model_output_file_test)
     #     input_output_ids_test = torch.load(
