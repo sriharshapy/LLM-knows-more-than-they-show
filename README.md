@@ -26,6 +26,7 @@ This repository contains the codebase for the extended experiments based on the 
 
 # Fine-Tuning LLaMA 3.2 1B Model with MedQuAD Dataset
 - `notebooks/llms_finetune_llama_1B.ipynb`
+  
 The provided code demonstrates the fine-tuning of the LLaMA 3.2 1B model using the MedQuAD dataset, which comprises over 47,000 medical question-and-answer pairs sourced from National Institutes of Health (NIH) websites. This process aims to enhance the model's proficiency in understanding and generating medical-related content.
 
 ## Dataset Overview
