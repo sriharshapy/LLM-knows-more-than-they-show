@@ -29,10 +29,6 @@ This repository contains the codebase for the extended experiments based on the 
   
 The provided code demonstrates the fine-tuning of the LLaMA 3.2 1B model using the MedQuAD dataset, which comprises over 47,000 medical question-and-answer pairs sourced from National Institutes of Health (NIH) websites. This process aims to enhance the model's proficiency in understanding and generating medical-related content.
 
-## Dataset Overview
-
-- **MedQuAD**: A comprehensive dataset containing 47,457 Q&A pairs across 37 question types, covering topics such as treatments, diagnoses, and side effects.
-
 ## Training Process
 
 1. **Environment Setup**:
@@ -68,20 +64,7 @@ The provided code demonstrates the fine-tuning of the LLaMA 3.2 1B model using t
 
 5. **Model Evaluation and Deployment**:
    - After training, generate responses to medical queries to assess the model's performance.
-   - Save and push the fine-tuned model and tokenizer to the Hugging Face hub for future use.
+   - Save and push the fine-tuned model and tokenizer to the Hugging Face hub for future use. Model is available at this repo [hitmanonholiday/LLAMA-3.2-1B-medical-qa](https://huggingface.co/hitmanonholiday/LLAMA-3.2-1B-medical-qa)
 
-## Hyperparameter Details
 
-- **LoRA Parameters**:
-  - `lora_r`: Sets the rank for the low-rank adaptation matrices, controlling the capacity of the LoRA layers.
-  - `lora_alpha`: Scales the LoRA updates, influencing the learning dynamics during fine-tuning.
-  - `lora_dropout`: Applies dropout to the LoRA layers to mitigate overfitting.
-
-- **Training Arguments**:
-  - `num_train_epochs`: Determines how many times the model will pass through the entire training dataset.
-  - `per_device_train_batch_size`: Specifies the number of samples processed per batch on each device.
-  - `learning_rate`: Controls the step size for weight updates during training.
-  - `weight_decay`: Applies a penalty to large weights to encourage model generalization.
-  - `optim`: Chooses the optimization algorithm; in this case, a variant of AdamW optimized for memory efficiency.
-  - `lr_scheduler_type`: Defines the strategy for adjusting the learning rate throughout training to improve convergence.
 
